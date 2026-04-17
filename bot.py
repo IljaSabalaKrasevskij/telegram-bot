@@ -14,7 +14,10 @@ client = Anthropic()
 conversation_history: dict[int, list] = {}
 
 # Only allow this Telegram user ID (set via env var for security)
-ALLOWED_USER_ID = int(os.environ.get("ALLOWED_USER_ID", "0"))
+try:
+    ALLOWED_USER_ID = int(os.environ.get("ALLOWED_USER_ID", "0"))
+except (ValueError, TypeError):
+    ALLOWED_USER_ID = 0
 
 
 def is_allowed(user_id: int) -> bool:
